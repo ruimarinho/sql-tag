@@ -1,1 +1,4 @@
 extends: seegno
+
+rules:
+  id-match: off
