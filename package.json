@@ -1,13 +1,10 @@
 {
   "name": "sql-tag",
   "version": "0.0.1",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/seegno/sql-tag.git"
-  },
   "description": "A template tag for writing elegant sql strings",
   "keywords": [
     "es6",
+    "es2015",
     "multiline",
     "sql",
     "sql-tag",
@@ -16,26 +13,44 @@
     "tagged",
     "template"
   ],
+  "homepage": "https://github.com/seegno/sql-tag",
+  "bugs": "https://github.com/seegno/sql-tag/issues",
+  "license": "MIT",
   "author": {
     "name": "Rui Marinho",
     "email": "rui.marinho@seegno.com",
     "url": "https://github.com/ruimarinho"
   },
-  "homepage": "https://github.com/seegno/sql-tag",
-  "bugs": {
-    "url": "https://github.com/seegno/sql-tag/issues"
+  "main": "dist/src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seegno/sql-tag.git"
   },
-  "license": "MIT",
   "scripts": {
-    "changelog": "./node_modules/.bin/github-changes -o seegno -r sql-tag -a --only-pulls --use-commit-body --title 'Changelog' --date-format '/ YYYY-MM-DD'",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha test/*_test.js --require should --reporter spec"
+    "changelog": "github_changelog_generator --no-issues --header-label='# Changelog' --future-release=v$npm_config_future_release && sed -i '' -e :a -e '$d;N;2,4ba' -e 'P;D' CHANGELOG.md",
+    "lint": "eslint src test",
+    "prepublish": "npm run transpile",
+    "test": "NODE_ENV=test mocha $npm_package_options_mocha",
+    "transpile": "rm -rf dist/* && babel src --out-dir dist/src && babel test --out-dir dist/test && cp package.json dist/",
+    "version": "npm run changelog --future-release=$npm_package_version && npm run transpile && git add -A CHANGELOG.md dist"
   },
   "devDependencies": {
-    "github-changes": "0.0.16",
-    "mocha": "^2.1.0",
-    "should": "^5.0.1"
+    "babel-cli": "^6.11.4",
+    "babel-preset-es2015-node4": "^2.1.0",
+    "babel-register": "^6.11.6",
+    "eslint": "^3.3.0",
+    "eslint-config-seegno": "^6.0.0",
+    "mocha": "^3.0.2",
+    "pre-commit": "^1.1.2",
+    "should": "^11.0.0"
   },
   "engines": {
-    "iojs": ">= 1.0.0"
-  }
+    "node": ">=4"
+  },
+  "options": {
+    "mocha": "--compilers js:babel-register --recursive --require should"
+  },
+  "pre-commit": [
+    "lint"
+  ]
 }
