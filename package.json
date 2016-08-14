@@ -31,11 +31,12 @@
     "lint": "eslint src test",
     "prepublish": "npm run transpile",
     "test": "NODE_ENV=test mocha $npm_package_options_mocha",
-    "transpile": "rm -rf dist/* && babel src --out-dir dist/src && babel test --out-dir dist/test && cp package.json dist/",
+    "transpile": "rm -rf dist/* && babel src --out-dir dist/src && cp package.json dist/",
     "version": "npm run changelog --future-release=$npm_package_version && npm run transpile && git add -A CHANGELOG.md dist"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
     "babel-preset-es2015-node4": "^2.1.0",
     "babel-register": "^6.11.6",
     "eslint": "^3.3.0",

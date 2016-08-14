@@ -8,10 +8,11 @@ import sql from '../src';
 
 describe('sql-tag', () => {
   it('should support template strings with placeholders', () => {
-    const out = sql`SELECT ${'bar'} FROM "Foo" WHERE bar = ${1} AND baz IN (${['biz']})`;
+    const out = sql`SELECT * FROM "Foo" WHERE foo = ${'bar'} AND bar = ${1} AND baz IN (${['biz']})`;
 
     out.should.eql({
-      query: 'SELECT ? FROM "Foo" WHERE bar = ? AND baz IN (?)',
+      sql: 'SELECT * FROM "Foo" WHERE foo = ? AND bar = ? AND baz IN (?)',
+      text: 'SELECT * FROM "Foo" WHERE foo = $1 AND bar = $2 AND baz IN ($3)',
       values: ['bar', 1, ['biz']]
     });
   });
@@ -20,7 +21,8 @@ describe('sql-tag', () => {
     const out = sql`SELECT * FROM "Foo"`;
 
     out.should.eql({
-      query: 'SELECT * FROM "Foo"',
+      sql: 'SELECT * FROM "Foo"',
+      text: 'SELECT * FROM "Foo"',
       values: []
     });
   });

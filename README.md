@@ -1,6 +1,8 @@
 # sql-tag
 
-A template tag for writing elegant sql strings based on [ES6 tagged template strings](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/template_strings#Tagged_template_strings).
+A template tag for writing elegant parameterized SQL queries based on [ES2015 tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_template_literals).
+
+Compatible with [pg](https://github.com/brianc/node-postgres), [pg-native](https://github.com/brianc/node-pg-native), [mysql](https://www.npmjs.com/package/mysql) and [mysql2](https://www.npmjs.com/package/mysql2).
 
 ## Status
 
@@ -28,31 +30,49 @@ $ npm install sql-tag
 ```js
 var sql = require('sql-tag');
 
-var out = sql`SELECT * FROM "Foo" WHERE id = ${1}`;
-// => { query: 'SELECT * FROM "Foo WHERE id = ?', values: [1] }
+var out = sql`SELECT * FROM foo WHERE id = ${'foo'}`;
+// => { query: 'SELECT * FROM foo WHERE id = $1', values: ['foo'] }
 ```
 
 The tag itself is framework agnostic. It should just require a small modification to the query generator function.
 
 **NOTE**: the `sql` tag does not provide any kind of escaping safety. It delegates that work to the underlying framework.
 
-### Integrating with [sequelize](https://github.com/sequelize/sequelize)
+### Integration with [pg](https://github.com/brianc/node-postgres)/[pg-native](https://github.com/brianc/node-pg-native)
 
-Check out the [sequelize-sql-tag](https://www.npmjs.com/sequelize-sql-tag) plugin.
+The output format is `sql-tag` is directly compatible with `pg` and `pg-native` parameterized queries.
 
-### Integrating with [pg](https://github.com/brianc/node-postgres)
+```js
+var pg = require('pg');
+var client = new pg.Client();
+var sql = require('sql-tag');
 
-Check out the [pg-sql-tag](https://www.npmjs.com/pg-sql-tag) plugin.
+client.connect(function (err) {
+  if (err) throw err;
+
+  client.query(sql`SELECT * FROM foo WHERE id = ${'foo'}`).then(console.log);
+});
+```
+
+### Integration with [mysql](https://www.npmjs.com/package/mysql)/[mysql2](https://www.npmjs.com/package/mysql2)
+
+```js
+var mysql = require('mysql');
+var connection = mysql.createConnection({ user: 'root', password: 'root' });
+var sql = require('sql-tag');
+
+connection.query(sql`SELECT * FROM foo WHERE id = ${'foo'}`, (err, rows) => console.log(err, rows));
+```
+
+### Integration with [sequelize](https://github.com/sequelize/sequelize)
+
+Sequelize requires a special format to be able to handle parameterized queries. Check out the [sequelize-sql-tag](https://www.npmjs.com/sequelize-sql-tag) plugin for it.
 
 ## Tests
 
 ```
 $ npm test
 ```
-
-## Credits
-
-Inspired by the awesome [Taras Mitran](https://github.com/qooleot) [post](http://ivc.com/blog/better-sql-strings-in-io-js-nodejs-part-2/).
 
 ## License
 
