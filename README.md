@@ -14,7 +14,7 @@ Compatible with [pg](#integration-with-pgpg-native), [pg-native](#integration-wi
 Install the package via `npm`:
 
 ```bash
-$ npm install sql-tag
+$ npm install --save sql-tag
 ```
 
 ## Usage
