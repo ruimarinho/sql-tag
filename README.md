@@ -96,5 +96,5 @@ MIT
 
 [npm-image]: https://img.shields.io/npm/v/sql-tag.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/sql-tag
-[travis-image]: https://img.shields.io/travis/seegno/sql-tag.svg?style=flat-square
+[travis-image]: https://img.shields.io/travis/seegno/sql-tag/v1.0.0.svg?style=flat-square
 [travis-url]: https://travis-ci.org/seegno/sql-tag
