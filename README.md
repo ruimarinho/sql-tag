@@ -29,19 +29,17 @@ $ npm install --save sql-tag
 #### Examples
 ```js
 const sql = require('sql-tag');
-
 const out = sql`SELECT * FROM biz WHERE id = ${'foo'}`;
-// => { query: 'SELECT * FROM biz WHERE id = $1', values: ['foo'] }
+// => { sql: 'SELECT * FROM biz WHERE id = ?', query: 'SELECT * FROM biz WHERE id = $1', values: ['foo'] }
 ```
 
 ```js
 const sql = require('sql-tag');
 const foo = 'bar';
-
 const out = sql`SELECT * FROM biz
   WHERE id = ${foo}
 `;
-// => { query: 'SELECT * FROM biz WHERE id = $1', values: ['bar'] }
+// => { sql: 'SELECT * FROM biz\n  WHERE id = ?\n', query: 'SELECT * FROM biz\n  WHERE id = $1\n', values: ['bar'] }
 ```
 
 The tag itself is framework agnostic. It should just require a small modification to the query generator function.
