@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.0.1](https://github.com/seegno/sql-tag/tree/v1.0.1) (2016-11-04)
+[Full Changelog](https://github.com/seegno/sql-tag/compare/v1.0.0...v1.0.1)
+
+**Merged pull requests:**
+
+- Remove whitespace manipulation to avoid unintended consequences [\#7](https://github.com/seegno/sql-tag/pull/7) ([ruimarinho](https://github.com/ruimarinho))
+
 ## [v1.0.0](https://github.com/seegno/sql-tag/tree/v1.0.0) (2016-08-17)
 [Full Changelog](https://github.com/seegno/sql-tag/compare/v0.0.1...v1.0.0)
 
